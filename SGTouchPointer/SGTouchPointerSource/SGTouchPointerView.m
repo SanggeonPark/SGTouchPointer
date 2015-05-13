@@ -38,7 +38,8 @@
 
 - (void)handleTouches:(NSSet *)touches
 {
-    if (self.delegate.showAlwaysTouchIndicator == NO && [self.delegate hasMirroredScreen] == NO) {
+    if (![self.delegate showTouchIndicator])
+    {
         [self removeTouches:nil];
         return;
     }

@@ -9,14 +9,17 @@
 #import "SGTouchPointerView.h"
 #import <objc/runtime.h>
 
+#pragma mark - Private
+
 @interface SGTouchPointerWindow () <SGTouchPointerViewDelegate>
 @property (nonatomic, strong) SGTouchPointerView *touchPointerView;
 @end
 
+#pragma mark - 
 
 @implementation SGTouchPointerWindow
 
-#pragma mark - SGTouchPointerViewDelegate
+#pragma mark - Helper
 
 - (BOOL)hasMirroredScreen
 {
@@ -35,6 +38,19 @@
         }
     }
     return hasMirroredScreen;
+}
+
+#pragma mark - SGTouchPointerViewDelegate
+
+- (BOOL)showTouchIndicator
+{
+    if (self.presentationMode == SGTouchIndicatorPresentationModeNever ||
+        (self.presentationMode == SGTouchIndicatorPresentationModeExternalScreen && [self hasMirroredScreen] == NO))
+    {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Accessors
@@ -85,7 +101,7 @@
 
 - (void)sendEvent:(UIEvent *)event
 {
-    if (!self.showAlwaysTouchIndicator && ![self hasMirroredScreen]) {
+    if (![self showTouchIndicator]) {
         [super sendEvent:event];
         return;
     }

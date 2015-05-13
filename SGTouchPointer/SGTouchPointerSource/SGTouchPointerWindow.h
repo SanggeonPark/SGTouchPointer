@@ -7,9 +7,19 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Constants
+
+typedef NS_ENUM(NSUInteger, SGTouchIndicatorPresentationMode) {
+    SGTouchIndicatorPresentationModeExternalScreen = 0,
+    SGTouchIndicatorPresentationModeAlways = 1,
+    SGTouchIndicatorPresentationModeNever = 2
+};
+
+#pragma mark -
+
 @interface SGTouchPointerWindow : UIWindow
 
-@property (nonatomic, assign) BOOL showAlwaysTouchIndicator;
+@property (nonatomic, assign) SGTouchIndicatorPresentationMode presentationMode;
 
 // color for normal state
 @property (nonatomic, strong) UIColor *normalTouchPointColor;

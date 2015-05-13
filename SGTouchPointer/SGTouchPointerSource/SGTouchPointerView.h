@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Protocols
 @protocol SGTouchPointerViewDelegate <NSObject>
-
 @required
-@property (nonatomic, assign) BOOL showAlwaysTouchIndicator;
-- (BOOL)hasMirroredScreen;
+- (BOOL)showTouchIndicator;
 
 @end
+
+#pragma mark -
 
 @interface SGTouchPointerView : UIView
 @property (nonatomic, weak) id <SGTouchPointerViewDelegate> delegate;
