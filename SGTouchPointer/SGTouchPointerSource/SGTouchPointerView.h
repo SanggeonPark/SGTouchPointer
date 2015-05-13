@@ -11,9 +11,11 @@
 @protocol SGTouchPointerViewDelegate <NSObject>
 
 @required
+@property (nonatomic, assign) BOOL showAlwaysTouchIndicator;
 - (BOOL)hasMirroredScreen;
 
 @end
+
 @interface SGTouchPointerView : UIView
 @property (nonatomic, weak) id <SGTouchPointerViewDelegate> delegate;
 @property (nonatomic, strong) UIColor *indicatorColor;

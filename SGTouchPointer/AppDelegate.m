@@ -19,7 +19,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[SGTouchPointerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    SGTouchPointerWindow *touchWindow = [[SGTouchPointerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = touchWindow;
+    touchWindow.showAlwaysTouchIndicator = YES;
     self.window.rootViewController = [ViewController new];
     [self.window makeKeyAndVisible];
     return YES;

@@ -9,6 +9,8 @@
 
 @interface SGTouchPointerWindow : UIWindow
 
+@property (nonatomic, assign) BOOL showAlwaysTouchIndicator;
+
 // color for normal state
 @property (nonatomic, strong) UIColor *normalTouchPointColor;
 

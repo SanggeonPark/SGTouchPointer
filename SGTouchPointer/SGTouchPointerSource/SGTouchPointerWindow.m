@@ -85,7 +85,7 @@
 
 - (void)sendEvent:(UIEvent *)event
 {
-    if (![self hasMirroredScreen]) {
+    if (!self.showAlwaysTouchIndicator && ![self hasMirroredScreen]) {
         [super sendEvent:event];
         return;
     }
