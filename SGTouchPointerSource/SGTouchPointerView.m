@@ -9,11 +9,11 @@
 #import "SGTouchPointerView.h"
 #import <objc/runtime.h>
 
-@interface S2MTouchView : UIView
+@interface SGTouchView : UIView
 
 @end
 
-@implementation S2MTouchView
+@implementation SGTouchView
 
 - (void)removeFromSuperview
 {
@@ -31,13 +31,15 @@
 {
     CFMutableDictionaryRef _touchDictionary;
 }
+
 @end
 
 @implementation SGTouchPointerView
 
 - (void)handleTouches:(NSSet *)touches
 {
-    if ([self.delegate hasMirroredScreen] == NO) {
+    if (![self.delegate showTouchIndicator])
+    {
         [self removeTouches:nil];
         return;
     }
@@ -59,9 +61,8 @@
         }
         else
         {
-            if (touchIndicationView == NULL)
-            {
-                touchIndicationView = [[S2MTouchView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+            if (touchIndicationView == NULL) {
+                touchIndicationView = [[SGTouchView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
                 [self addSubview:touchIndicationView];
                 CFDictionarySetValue(_touchDictionary, (__bridge const void *)(touch), (__bridge const void *)(touchIndicationView));
                 touchIndicationView.backgroundColor = self.indicatorColor;
@@ -82,12 +83,10 @@
     void const * keys[count];
     void const * values[count];
     CFDictionaryGetKeysAndValues(_touchDictionary, keys, values);
-    for (CFIndex i = 0; i < count; ++i)
-    {
+    for (CFIndex i = 0; i < count; ++i) {
         UITouch *touch = (__bridge UITouch *)keys[i];
         
-        if (touches.count == 0 || ![touches containsObject:touch])
-        {
+        if (touches.count == 0 || ![touches containsObject:touch]) {
             UIView *view = (__bridge UIView *)values[i];
             CFDictionaryRemoveValue(_touchDictionary, (__bridge const void *)(touch));
             [view removeFromSuperview];
