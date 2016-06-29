@@ -13,12 +13,8 @@ Pod::Spec.new do |s|
 
   s.license	 = { :type => 'BSD-new', :file => 'LICENSE.txt' }
 
+  s.source_files  = 'SGTouchPointerSource/*.{h,m}'
+
   s.public_header_files = 'SGTouchPointerSource/*.h'
-
-  s.default_subspecs = 'SGTouchPointerSource'
-
-  s.subspec 'SGTouchPointerSource' do |sh|
-    sh.source_files  = 'SGTouchPointerSource/*.{h,m}'
-  end
-
+  
 end

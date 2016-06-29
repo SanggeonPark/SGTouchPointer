@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "SGTouchPointerWindow.h"
+#import <SGTouchPointer/SGTouchPointerWindow.h>
 
 #import "ViewController.h"
 
