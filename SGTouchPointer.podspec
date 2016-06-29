@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/SanggeonPark/SGTouchPointer"
 
   s.source       = { :git => 'https://github.com/SanggeonPark/SGTouchPointer.git', :tag => s.version.to_s }
-  s.authors      = { "Sanggeon Park" => "gunnih@gmail.com" }
+  s.authors      = { "Sanggeon Park" => "gunnih@gmail.com" , "gunnih" => "sanggeon.park@sensorberg.com"}
 
   s.ios.deployment_target = '6.0'
   
