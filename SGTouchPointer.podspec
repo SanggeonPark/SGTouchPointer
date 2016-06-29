@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SGTouchPointer"
-  s.version      = "0.1.5"
+  s.version      = "0.1.6"
   s.summary      = "iOS Touch point presenter with AirPlay"
   s.homepage     = "https://github.com/SanggeonPark/SGTouchPointer"
 
@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.source_files  = 'SGTouchPointerSource/*.{h,m}'
 
   s.public_header_files = 'SGTouchPointerSource/*.h'
-  
+
 end
