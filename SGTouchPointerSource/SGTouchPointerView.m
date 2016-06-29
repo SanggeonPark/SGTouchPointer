@@ -9,23 +9,44 @@
 #import "SGTouchPointerView.h"
 #import <objc/runtime.h>
 
-@interface SGTouchView : UIView
+#pragma mark - constants
 
+static const CGFloat SGRemoveAnimationTransformScale = 2.0f;
+static const CGFloat SGRemoveAnimationDuration = 0.5f;
+static const CGFloat SGIndicateAnimationScale = 1.5f;
+static const CGFloat SGIndicateAnimationDuration = 0.2f;
+static const CGFloat SGTouchPointerSize = 40.0f;
+static const CGFloat SGTouchPointerAlpha = 0.5f;
+
+#pragma mark - SGTouchView
+
+@interface SGTouchView : UIView
+- (void)indicateStrongPress;
 @end
 
 @implementation SGTouchView
 
 - (void)removeFromSuperview
 {
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:SGRemoveAnimationDuration animations:^{
         self.alpha = 0.0f;
-        self.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1);
+        self.layer.transform = CATransform3DMakeScale(SGRemoveAnimationTransformScale, SGRemoveAnimationTransformScale, 1);
     } completion:^(BOOL completed){
         [super removeFromSuperview];
     }];
 }
 
+- (void)indicateStrongPress
+{
+    [UIView animateWithDuration:SGIndicateAnimationDuration animations:^{
+        self.layer.transform = CATransform3DMakeScale(SGIndicateAnimationScale, SGIndicateAnimationScale, 1);
+    } completion:^(BOOL completed){
+    }];
+}
+
 @end
+
+#pragma mark - SGTouchPointerView
 
 @interface SGTouchPointerView ()
 {
@@ -62,15 +83,26 @@
         else
         {
             if (touchIndicationView == NULL) {
-                touchIndicationView = [[SGTouchView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+                touchIndicationView = [[SGTouchView alloc] initWithFrame:CGRectMake(0, 0, SGTouchPointerSize, SGTouchPointerSize)];
                 [self addSubview:touchIndicationView];
                 CFDictionarySetValue(_touchDictionary, (__bridge const void *)(touch), (__bridge const void *)(touchIndicationView));
                 touchIndicationView.backgroundColor = self.indicatorColor;
-                touchIndicationView.layer.cornerRadius = 12.5;
-                touchIndicationView.alpha = 0.5f;
+                touchIndicationView.layer.cornerRadius = SGTouchPointerSize/2.0f;
+                touchIndicationView.alpha = SGTouchPointerAlpha;
             }
             
             touchIndicationView.center = point;
+            
+            if ([touch respondsToSelector:@selector(maximumPossibleForce)])
+            {
+                CGFloat maximumPossibleForce = touch.maximumPossibleForce;
+                CGFloat force = touch.force;
+                if (maximumPossibleForce/force < 3)
+                {
+                    [(SGTouchView *)touchIndicationView indicateStrongPress];
+                }
+            }
+
         }
     }
     

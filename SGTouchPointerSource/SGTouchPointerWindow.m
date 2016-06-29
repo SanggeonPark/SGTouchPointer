@@ -87,6 +87,18 @@
     return _touchPointerView;
 }
 
+- (void)setFocusedTouchPointColor:(UIColor *)focusedTouchPointColor
+{
+    _focusedTouchPointColor = focusedTouchPointColor;
+    _blockedTouchPointColor = focusedTouchPointColor;
+}
+
+- (void)setBlockedTouchPointColor:(UIColor *)blockedTouchPointColor
+{
+    _focusedTouchPointColor = blockedTouchPointColor;
+    _blockedTouchPointColor = blockedTouchPointColor;
+}
+
 #pragma mark - Overwritten From Super Class
 
 - (void)becomeKeyWindow
@@ -95,7 +107,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         self.normalTouchPointColor = [UIColor grayColor];
-        self.focusedTouchPointColor = [UIColor orangeColor];
+        self.blockedTouchPointColor = [UIColor orangeColor];
     });
 }
 
@@ -106,11 +118,11 @@
         return;
     }
     
-    if ([UIDevice currentDevice].orientation != UIDeviceOrientationFaceUp) {
+    if (self.blockTouches && [UIDevice currentDevice].orientation == UIDeviceOrientationFaceUp) {
+        self.touchPointerView.indicatorColor = self.blockedTouchPointColor;
+    } else {
         [super sendEvent:event];
         self.touchPointerView.indicatorColor = self.normalTouchPointColor;
-    } else {
-        self.touchPointerView.indicatorColor = self.focusedTouchPointColor;
     }
     
     [[self touchPointerView] handleTouches:[event allTouches]];

@@ -21,6 +21,11 @@ typedef NS_ENUM(NSUInteger, SGTouchIndicatorPresentationMode) {
 
 @property (nonatomic, assign) SGTouchIndicatorPresentationMode presentationMode;
 
+
+// When device orientation is UIDeviceOrientationFaceUp, touch events will not dispatch to sub views and show touch pointer with blockedTouchPointColor
+// default is NO
+@property (nonatomic, assign) BOOL blockTouches;
+
 // color for normal state
 @property (nonatomic, strong) UIColor *normalTouchPointColor;
 
@@ -28,6 +33,8 @@ typedef NS_ENUM(NSUInteger, SGTouchIndicatorPresentationMode) {
  * color for pointing state,
  * when app doesn't interact with any touch points except touch pointers.
  */
-@property (nonatomic, strong) UIColor *focusedTouchPointColor;
+@property (nonatomic, strong) UIColor *focusedTouchPointColor __attribute__ ((deprecated("deprecated in 0.1.5, please use blockedTouchPointColorInstead.")));
+
+@property (nonatomic, strong) UIColor *blockedTouchPointColor;
 
 @end
